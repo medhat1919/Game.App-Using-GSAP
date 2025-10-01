@@ -1,0 +1,135 @@
+@import "tailwindcss";
+
+
+@layer utilities {
+ .mask-clip-path {
+    clip-path: polygon(0 0, 100% 0, 150% 150%, 0 150%);
+  
+
+  }
+}
+
+.active {
+  --animation-order: 0;
+  animation: indicator-line 0.5s ease infinite;
+  animation-delay: calc(var(--animation-order) * 0.1s); /* كل عنصر هيستنى وقت مختلف */
+  width: 10px;
+  height: 9px;
+  background: blue; /* عشان نشوف الأنيميشن */
+}
+
+/* Define the animation */
+@keyframes indicator-line {
+  0% {
+    transform: translateY(0); /* Start position */
+    opacity: 1; /* Fully visible */
+  }
+  50% {
+    transform: translateY(10px); /* Move a little to the right */
+    opacity: 0.5; /* Fade a bit */
+  }
+  100% {
+    transform: translateY(0); /* Back to start */
+    opacity: 1; /* Fully visible again */
+  }
+}
+
+
+.act{
+ /* كل عنصر هيستنى وقت مختلف */
+  width: 100%;
+   background: rgb(0, 0, 0); /* عشان نشوف الأنيميشن */
+   transition: 0.5s;
+   ;
+}
+
+.story-img-container{
+  position: relative; /* بدل relative */
+  height: 90vh; /* بدل h-[90vh] */
+  width: 100%; /* بدل w-full */
+  filter: url("#flt_tag"); /* نفس الخاصية زي ما هي */
+
+  /* للشاشات المتوسطة (md) وأكبر، يعني عرض 768px فأكتر */
+  @media (min-width: 768px) {
+    height: 100dvh; /* بدل md:h-dvh */
+  }
+}
+
+
+.story-img-content {
+    /* @apply absolute w-full h-[50dvh] opacity-100 left-10 top-16 */
+    position: absolute;
+    width: 100%;
+    height: 50dvh; /* h-[50dvh] */
+    opacity: 1;
+    left: 40px; /* left-10 (assuming 1 unit = 4px in default Tailwind spacing) */
+    top: 64px; /* top-16 */
+    
+    /* transform: translate3d(0, 0, 0) rotateX(0) rotateY(0) rotateZ(0) scale(1); */
+    transform: translate3d(0, 0, 0) scale(1); /* تبسيط التحويلات لأنها كلها قيم صفرية */
+    
+    /* تحسين الأداء عبر إخبار المتصفح بأن العنصر سيتحرك */
+    will-change: transform, left, top; 
+    transition: transform 0.5s ease-out; /* إضافة انتقال بسيط لضمان السلاسة */
+}
+
+/* ------------------ تنسيقات شاشات MD (Min-width: 768px) ------------------ */
+@media (min-width: 768px) {
+    .story-img-content {
+        /* @apply md:h-dvh md:left-0 md:top-10 */
+        height: 100dvh; /* md:h-dvh */
+        left: 0;       /* md:left-0 */
+        top: 40px;     /* md:top-10 */
+    }
+}
+
+/* ------------------ تنسيقات شاشات LG (Min-width: 1024px) ------------------ */
+@media (min-width: 1024px) {
+    .story-img-content {
+        /* @apply lg:left-[-300px] lg:top-[-100px] */
+        left: -300px;  /* lg:left-[-300px] */
+        top: -100px;   /* lg:top-[-100px] */
+    }
+}
+
+.story-img-mask {
+    /* @apply absolute left-0 top-0 size-full overflow-hidden */
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;    /* size-full */
+    height: 100%;   /* size-full */
+    overflow: hidden;
+
+    /* clip-path: polygon(4% 0, 83% 21%, 100% 73%, 0% 100%); */
+    clip-path: polygon(4% 0, 83% 21%, 100% 73%, 0% 100%);
+}
+
+/* ------------------ تنسيقات شاشات MD (Min-width: 768px) ------------------ */
+@media (min-width: 768px) {
+    .story-img-mask {
+        /* @apply md:left-[20%] md:top-[-10%] md:size-4/5 */
+        left: 20%;      /* md:left-[20%] */
+        top: -10%;      /* md:top-[-10%] */
+        width: 80%;     /* md:size-4/5 (4/5 = 80%) */
+        height: 80%;    /* md:size-4/5 */
+    }
+}
+
+.animated-word {
+    /* @apply special-font font-zentry font-black opacity-0; 
+       يجب تعريف هذه الخطوط في مكان آخر (مثل @font-face)
+       هنا سنستخدم خط افتراضي */
+    font-family: 'zentry', 'special-font', sans-serif; /* استخدام أسماء الخطوط كما هي */
+    font-weight: 900; /* font-black */
+    opacity: 0;
+
+    /* transform: translate3d(10px, 51px, -60px) rotateY(60deg) rotateX(-40deg); */
+    transform: translate3d(10px, 51px, -60px) rotateY(60deg) rotateX(-40deg);
+
+    /* transform-origin: 50% 50% -150px !important; */
+    transform-origin: 50% 50% -150px !important;
+    
+    /* will-change: opacity, transform; */
+    will-change: opacity, transform;
+}
